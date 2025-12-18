@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "authentication",
+    "review",
 ]
 
 MIDDLEWARE = [
@@ -54,7 +56,9 @@ ROOT_URLCONF = "litrevu.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            BASE_DIR.joinpath('templates'),
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -65,6 +69,11 @@ TEMPLATES = [
         },
     },
 ]
+
+STATICFILES_DIRS = [
+    BASE_DIR.joinpath('static'),
+]
+
 
 WSGI_APPLICATION = "litrevu.wsgi.application"
 
@@ -102,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "fr-fr"
 
 TIME_ZONE = "UTC"
 
@@ -115,3 +124,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = "static/"
+
+# Indique à Django qu'il doit utiliser notre propre modèle User
+AUTH_USER_MODEL = 'authentication.User'
+
+# Spécifie la redirection après une inscription réussie
+LOGIN_REDIRECT_URL = 'home'
+
+# nécessaire car le décorateur @login_required en a besoin pou connaître l'URL de la page de connexion
+# afin d'y rediriger l'utilisateur déconnecté
+LOGIN_URL = 'login'

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if messages %}
+    <div id="user_messages">
+        {% for message in messages %}
+            <p class="{{ message.tags }}">
+                {{ message }}
+            </p>
+        {% endfor %}
+        </div>
+{% endif %}
+<form method="post" novalidate>
+    {{ form.as_p }}
+    {% csrf_token %}
+    <button type="submit" >Se connecter</button>
+</form>
+<p>Pas encore membre ? <a href="{% url 'sign_up' %}">Inscrivez-vous maintenant !</a></p>
+<p><a href="{% url 'home' %}">Home</a></p>
+{% endblock content %}

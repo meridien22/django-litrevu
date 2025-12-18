@@ -1,0 +1,12 @@
+#user_messages{
+    width: 350px;
+    height: 30px;
+    border: 1px solid black;
+    border-radius: 3px;
+    border-color: rgb(12,75,51);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(68,183,139);
+    color: rgb(255,255,255)
+}
