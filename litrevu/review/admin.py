@@ -1,8 +1,23 @@
 from django.contrib import admin
+from review.models import Ticket
+from review.models import Review
 
-from authentication.models import User
+class TicketAdmin(admin.ModelAdmin):
+    list_display = ("id",
+                    "title",
+                    "description",
+                    "user",
+                    "image",
+                    "time_created")
+    
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ("id",
+                    "rating",
+                    "user",
+                    "headline",
+                    "body",
+                    "time_created")
 
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('id', 'username', 'last_login')
+admin.site.register(Ticket, TicketAdmin)
 
-admin.site.register(User, UserAdmin)
+admin.site.register(Review, ReviewAdmin)

@@ -1,18 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
-{% if messages %}
-    <div id="user_messages">
-        {% for message in messages %}
-            <p class="{{ message.tags }}">
-                {{ message }}
-            </p>
-        {% endfor %}
-        </div>
-{% endif %}
+
 {% if user.is_authenticated %}
+
     <p>Vous êtes connecté en tant que {{ request.user }}. <a href="{% url 'logout' %}">Se déconnecter</a></p>
+    <ul>
+    {% for ticket in tickets %}
+        <li>{{ ticket.title }}</li>
+    {% endfor %}
+    </ul>
+    <p><a href="{% url 'ticket_create' %}">Créer un ticket</a></p>
+
 {% else %}
+
     <p><a href="{% url 'sign_up' %}">S'inscrire sur le site</a></p>
     <p><a href="{% url 'login' %}">Se connecter</a></p>
+
 {% endif %}
 {% endblock content %}

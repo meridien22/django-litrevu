@@ -129,8 +129,23 @@ STATIC_URL = "static/"
 AUTH_USER_MODEL = 'authentication.User'
 
 # Spécifie la redirection après une inscription réussie
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'posts'
 
-# nécessaire car le décorateur @login_required en a besoin pou connaître l'URL de la page de connexion
+# Nécessaire car le décorateur @login_required en a besoin pou connaître l'URL de la page de connexion
 # afin d'y rediriger l'utilisateur déconnecté
 LOGIN_URL = 'login'
+
+# Permet de voir le SQL généré par Django en temps réel dans ta console
+LOGING = {
+    'loggers': {
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        },
+    },
+}
+
+# URL depuis laquelle Django va essayer de servir des médias
+MEDIA_URL = '/media/'
+# répertoire local dans lequel Django doit sauvegarder les images téléversées
+MEDIA_ROOT = BASE_DIR.joinpath('media/')
