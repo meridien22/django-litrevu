@@ -1,19 +1,16 @@
 {% extends 'base.html' %}
+{% load review_extras %}
 {% block content %}
 
-<p>Vos posts</p>
+<p><a href="{% url 'ticket_create' %}">Demander une critique</a></p>
 
 {% for ticket in tickets %}
-    Vous avez publié un ticket<br>
+    {% get_poster_display ticket.user %} publié un ticket<br>
     {{ ticket.time_created }}<br>
     {{ ticket.title }}<br>
     {% if ticket.image %}
         <img src="{{ ticket.image.url }}">
     {% endif %}
-    <p>
-        <a href="{% url 'ticket_update' ticket.id %}">Modifier</a>
-        <a href="{% url 'ticket_delete' ticket.id %}">Supprimer</a>
-    </p>
     <br><br>
 {% endfor %}
 

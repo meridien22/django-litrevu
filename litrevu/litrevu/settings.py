@@ -129,7 +129,7 @@ STATIC_URL = "static/"
 AUTH_USER_MODEL = 'authentication.User'
 
 # Spécifie la redirection après une inscription réussie
-LOGIN_REDIRECT_URL = 'posts'
+LOGIN_REDIRECT_URL = 'flux'
 
 # Nécessaire car le décorateur @login_required en a besoin pou connaître l'URL de la page de connexion
 # afin d'y rediriger l'utilisateur déconnecté

@@ -10,7 +10,7 @@ from review.models import Ticket
 class Home(View):
      def get(self, request):
         if request.user.is_authenticated:
-           return redirect("posts") 
+           return redirect("flux") 
         else:
            return render(request, "review/home.html")
 
@@ -20,9 +20,16 @@ class Base(View):
 
 @login_required
 def posts(request):
-   tickets = Ticket.objects.filter(user=request.user)
+   tickets = Ticket.objects.filter(user=request.user).order_by('-time_created')
    return render(request,
             "review/posts.html",
+            context={"tickets": tickets})
+
+@login_required
+def flux(request):
+   tickets = Ticket.objects.all().order_by('-time_created')
+   return render(request,
+            "review/flux.html",
             context={"tickets": tickets})
 
 @login_required
@@ -40,13 +47,12 @@ def ticket_create(request):
    return render(request, "review/ticket_create.html", context={'form': form})
 
 
-
 @login_required
 def ticket_update(request, id):
    ticket = Ticket.objects.get(id=id)
 
    if request.method == 'POST':
-      form = TicketForm(request.POST, instance=ticket)
+      form = TicketForm(request.POST, request.FILES, instance=ticket)
       if form.is_valid():
          form.save()
          return redirect("posts") 
@@ -59,3 +65,17 @@ def ticket_update(request, id):
    return render(request,
                  "review/ticket_update.html",
                  context={"form": form})
+
+@login_required
+def ticket_delete(request, id):
+   ticket = Ticket.objects.get(id=id)
+
+   if request.method == 'POST':
+      ticket.delete()
+      return redirect("posts") 
+   
+   return render(request,
+                 "review/ticket_delete.html",
+                 context={"ticket": ticket})
+
+

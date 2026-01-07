@@ -7,13 +7,16 @@
         {% for field in form %}
 
             {% if field.name == 'image' and field.value %}
-                <img src="{{ field.value }}">
+                {{ field.label_tag }}<br>
+                <img src="{{ field.value.url }}"><br>
+                {{ field }}
             {% else %}
                 {{ field.label_tag }}<br>
                 {{ field }}<br>
             {% endif %}
             {{ field.errors }}
         {% endfor %}
+        <br>
         <input type="submit" value="Enregistrer">
     </form>
 {% endblock content %}

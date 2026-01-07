@@ -6,7 +6,8 @@
     </head>
     <body>
         <div class="main">
-        {% if messages %}
+
+        <!-- {% if messages %}
             <div id="user_messages">
             {% for message in messages %}
                 <p class="{{ message.tags }}">
@@ -14,8 +15,19 @@
                 </p>
             {% endfor %}
             </div>
+        {% endif %} -->
+
+        <p>LITReview</p>
+
+        {% if user.is_authenticated %}
+            Bienvenu(e) {{ request.user }} -------------- 
+            <a href="{% url 'flux' %}">Flux</a>
+            <a href="{% url 'posts' %}">Posts</a>
+             <a href="{% url 'abonnements' %}">Abonnements</a>
+            <a href="{% url 'logout' %}">Se déconnecter</a>
         {% endif %}
-            {% block content %}{% endblock content %}
+        
+        {% block content %}{% endblock content %}
         </div>
     </body>
 </html>

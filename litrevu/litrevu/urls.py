@@ -10,12 +10,15 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("home/", review.views.Home.as_view(), name="home"),
     path("", review.views.Base.as_view()),
-    path("sign-up", authentication.views.SignUp.as_view(), name="sign_up"),
-    path("login", authentication.views.LoginPage.as_view(), name="login"),
-    path("logout", authentication.views.logout_user, name="logout"),
+    path("sign-up/", authentication.views.SignUp.as_view(), name="sign_up"),
+    path("login/", authentication.views.LoginPage.as_view(), name="login"),
+    path("logout/", authentication.views.logout_user, name="logout"),
+    path("posts/", review.views.posts, name="posts"),
+    path("flux/", review.views.flux, name="flux"),
     path("tickets/add", review.views.ticket_create, name="ticket_create"),
-    path("posts", review.views.posts, name="posts"),
-    path("tickets/<int:id>/update/", review.views.ticket_update, name="ticket_update")
+    path("tickets/<int:id>/update/", review.views.ticket_update, name="ticket_update"),
+    path("tickets/<int:id>/delete/", review.views.ticket_delete, name="ticket_delete"),
+    path("abonnements/", authentication.views.abonnements, name="abonnements")
 ]
 
 # modèles d’URL pour que les média mis en ligne soit accessible par le biais d’une URL

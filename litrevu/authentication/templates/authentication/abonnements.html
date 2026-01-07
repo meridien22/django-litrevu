@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load authentication_extras %}
+{% block content %}
+
+    <h1>Suivre d'autres utilisateurs</h1>
+    <form action="" method="post" novalidate>
+        {{ form.as_p }}
+        {% csrf_token %}
+        <input type="submit" value="Envoyer">
+    </form>
+
+    <h1>Abonnements</h1>
+    {% for userFollows_form in userFollows_forms %}
+        <form action="" method="post" novalidate>
+            {% csrf_token %}
+            {% get_user_follow_display userFollows_form.followed_user.value %}
+            {{ userFollows_form.as_p }}
+        <input type="submit" value="Désabonner">
+    </form>
+    {% endfor %}
+
+{% endblock content %}
