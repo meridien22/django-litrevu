@@ -18,6 +18,10 @@ urlpatterns = [
     path("tickets/add", review.views.ticket_create, name="ticket_create"),
     path("tickets/<int:id>/update/", review.views.ticket_update, name="ticket_update"),
     path("tickets/<int:id>/delete/", review.views.ticket_delete, name="ticket_delete"),
+    path("tickets/<int:id>/review/", review.views.ticket_review, name="ticket_review"),
+    path("ticket_review/add", review.views.ticket_review_create, name="ticket_review_create"),
+    path("reviews/<int:id>/update/", review.views.review_update, name="review_update"),
+    path("reviews/<int:id>/delete/", review.views.review_delete, name="review_delete"),
     path("abonnements/", authentication.views.abonnements, name="abonnements")
 ]
 

@@ -1,18 +1,27 @@
 {% extends 'base.html' %}
 {% load review_extras %}
+
 {% block content %}
+<div id="flux">
+    <div class="flux_c01">
+        <a href="{% url 'ticket_create' %}" class="flux_c02" title="Ajouter un ticket">+</a>
+        <p>Ticket</p>
+        <a href="{% url 'ticket_review_create' %}" class="flux_c03" title="Ajouter une review">+</a>
+        <p>Review</p>
+    </div>
 
-<p><a href="{% url 'ticket_create' %}">Demander une critique</a></p>
+{% for post in posts %}
+    {% if post.content_type == 'TICKET' %}
 
-{% for ticket in tickets %}
-    {% get_poster_display ticket.user %} publié un ticket<br>
-    {{ ticket.time_created }}<br>
-    {{ ticket.title }}<br>
-    {% if ticket.image %}
-        <img src="{{ ticket.image.url }}">
+        {% include 'review/partials/ticket_snippet.html' with ticket=post%}
+
+    {% else %}
+
+        {% include 'review/partials/review_snippet.html' with review=post%}
+
     {% endif %}
-    <br><br>
-{% endfor %}
 
+{% endfor %}
+</div>
 
 {% endblock content %}

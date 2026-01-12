@@ -1,13 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h2>Inscription</h2>
-    {% if form.errors %}
-        {{ form.errors }}
-    {% endif %}
-    <form method="post" novalidate>
-        {{ form.as_p }}
-        {% csrf_token %}
-        <button type="submit" >S’inscrire</button>
-    </form>
-    <p><a href="{% url 'home' %}">Home</a></p>
+    <div id="signup" class="div_form">
+        <h2>Inscription</h2>
+        {% if form.errors %}
+            {{ form.errors }}
+        {% endif %}
+        <form method="post" novalidate>
+            {{ form.as_p }}
+            {% csrf_token %}
+            <div class="signup_c01">
+                <button type="submit" class="lien_1">S'inscrire</button>
+            </div>
+        </form>
+        <p><a href="{% url 'home' %}" class="signup_c02">Home</a></p>
+    </div>
 {% endblock content %}

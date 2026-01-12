@@ -3,19 +3,17 @@
 
 <p>Vos posts</p>
 
-{% for ticket in tickets %}
-    Vous avez publié un ticket<br>
-    {{ ticket.time_created }}<br>
-    {{ ticket.title }}<br>
-    {% if ticket.image %}
-        <img src="{{ ticket.image.url }}">
-    {% endif %}
-    <p>
-        <a href="{% url 'ticket_update' ticket.id %}">Modifier</a>
-        <a href="{% url 'ticket_delete' ticket.id %}">Supprimer</a>
-    </p>
-    <br><br>
-{% endfor %}
+{% for post in posts %}
+    {% if post.content_type == 'TICKET' %}
 
+            {% include 'review/partials/ticket_snippet.html' with ticket=post%}
+
+    {% else %}
+
+        {% include 'review/partials/review_snippet.html' with review=post%}
+
+    {% endif %}
+
+{% endfor %}
 
 {% endblock content %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<p>Modfier votre critique pour cette demande :</p>
+
+{% include 'review/partials/ticket_snippet.html' %}
+
+<p>Critique</p>
+<form action="" method="post" novalidate>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Enregistrer">
+</form>
+<button><a href="{% url 'posts' %}">Annuler</a></button>
+
+{% endblock content %}

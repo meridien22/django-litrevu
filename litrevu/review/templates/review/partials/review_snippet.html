@@ -1,0 +1,36 @@
+{% load review_extras %}
+
+<div id="review">
+
+    <div class="review_c02">
+
+        <div>{% get_poster_display review.user %} publié une critique</div>
+
+        <div>{{ review.time_created }}</div>
+
+        <div class="review_c01">
+            <span class="{% if review.rating >= 1 %}filled{% endif %}">★</span>
+            <span class="{% if review.rating >= 2 %}filled{% endif %}">★</span>
+            <span class="{% if review.rating >= 3 %}filled{% endif %}">★</span>
+            <span class="{% if review.rating >= 4 %}filled{% endif %}">★</span>
+            <span class="{% if review.rating >= 5 %}filled{% endif %}">★</span>
+        </div>
+
+    </div>
+
+
+    <p class="review_c03">{{ review.headline }}</p>
+   
+    <p class="review_c04">{{ review.body}}</p>
+
+
+    {% include 'review/partials/ticket_snippet.html' with ticket=review.ticket %}
+
+    {% if review.view == 'POSTS' %}
+        <p>
+            <a href="{% url 'review_update' review.id %}">Modifier</a>
+            <a href="{% url 'review_delete' review.id %}">Supprimer</a>
+        </p>
+    {% endif %}
+
+</div>

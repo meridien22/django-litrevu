@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from review.forms import TicketForm
-from review.models import Ticket
+from review.forms import TicketForm, ReviewForm
+from review.models import Ticket, Review
+from itertools import chain
+from django.db.models import Q, Count, CharField, Value
 
 # LoginRequiredMixin pour les classes correspond à 
 # @login_required pour les fonctions
@@ -12,7 +14,7 @@ class Home(View):
         if request.user.is_authenticated:
            return redirect("flux") 
         else:
-           return render(request, "review/home.html")
+           return redirect("login")
 
 class Base(View):
      def get(self, request):
@@ -20,17 +22,54 @@ class Base(View):
 
 @login_required
 def posts(request):
-   tickets = Ticket.objects.filter(user=request.user).order_by('-time_created')
+   tickets = Ticket.objects.filter(user=request.user)
+   tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
+   tickets = tickets.annotate(view=Value('POSTS', CharField()))
+   reviews = Review.objects.filter(user=request.user)
+   reviews = reviews.annotate(view=Value('POSTS', CharField()))
+
+   tickets_and_reviews = sorted(
+      chain(tickets, reviews),
+      key=lambda instance: instance.time_created,
+      reverse=True
+   )
+
    return render(request,
             "review/posts.html",
-            context={"tickets": tickets})
+            context={"posts": tickets_and_reviews})
 
 @login_required
 def flux(request):
-   tickets = Ticket.objects.all().order_by('-time_created')
-   return render(request,
-            "review/flux.html",
-            context={"tickets": tickets})
+   tickets = Ticket.objects.filter(
+      Q(user__followed_by__user=request.user) |
+      Q(user=request.user)
+   ).distinct().annotate(nb_reviews=Count('review'))
+
+   # Plus performant et sans le distinct 
+   # user_ids = list(request.user.follows.values_list('id', flat=True))
+   # user_ids.append(request.user.id)
+   # tickets = Ticket.objects.filter(user_id__in=user_ids)
+
+   tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
+
+   reviews = Review.objects.select_related('ticket').filter(
+      Q(user__followed_by__user=request.user) |
+      Q(user=request.user)
+   ).distinct()
+
+   tickets_and_reviews = sorted(
+      chain(tickets, reviews),
+      key=lambda instance: instance.time_created,
+      reverse=True
+   )
+
+   return render(
+      request,
+      "review/flux.html",
+      context={
+         "posts": tickets_and_reviews
+      }
+   )
 
 @login_required
 def ticket_create(request):
@@ -59,12 +98,28 @@ def ticket_update(request, id):
    else:
       form = TicketForm(instance=ticket)
 
-   for field in form:
-      print(field)
-   
    return render(request,
                  "review/ticket_update.html",
                  context={"form": form})
+
+@login_required
+def ticket_review(request, id):
+   ticket = Ticket.objects.get(id=id)
+
+   if request.method == 'POST':
+      form = ReviewForm(request.POST)
+      if form.is_valid():
+         review = form.save(commit=False)
+         review.user = request.user
+         review.ticket = ticket
+         review.save()
+         return redirect("flux")
+   else:
+      form = ReviewForm()
+
+   return render(request,
+                "review/ticket_review.html",
+                context={"ticket":ticket, "form": form})
 
 @login_required
 def ticket_delete(request, id):
@@ -78,4 +133,63 @@ def ticket_delete(request, id):
                  "review/ticket_delete.html",
                  context={"ticket": ticket})
 
+@login_required
+def review_update(request, id):
+   review = Review.objects.get(id=id)
+   ticket = review.ticket
 
+   if request.method == 'POST':
+      form = ReviewForm(request.POST, instance=review)
+      if form.is_valid():
+         form.save()
+         return redirect("posts") 
+   else:
+      form = ReviewForm(instance=review)
+
+   return render(request,
+                 "review/review_update.html",
+                 context={"form": form,
+                          "ticket": ticket})
+
+@login_required
+def review_delete(request, id):
+   review = Review.objects.get(id=id)
+
+   if request.method == 'POST':
+      review.delete()
+      return redirect("posts") 
+   
+   return render(request,
+                 "review/review_delete.html",
+                 context={"review": review})
+
+@login_required
+def ticket_review_create(request):
+   if request.method == 'POST':
+
+      ticket_form = TicketForm(request.POST, request.FILES, prefix='ticket')
+      review_form = ReviewForm(request.POST, prefix='review')
+
+      if ticket_form.is_valid() and review_form.is_valid():
+
+         ticket = ticket_form.save(commit=False)
+         ticket.user = request.user
+         ticket.save()
+
+         review = review_form.save(commit=False)
+         review.user = request.user
+         review.ticket = ticket
+         review.save()
+
+         return redirect("flux")
+      
+   else:
+
+      ticket_form = TicketForm()
+      review_form = ReviewForm()
+
+   return render(request, "review/ticket_review_create.html",
+                 context={
+                    "ticket_form": ticket_form,
+                    "review_form": review_form
+                    })

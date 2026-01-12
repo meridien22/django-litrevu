@@ -1,10 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-<form method="post" novalidate>
-    {{ form.as_p }}
-    {% csrf_token %}
-    <button type="submit" >Se connecter</button>
-</form>
-<p>Pas encore membre ? <a href="{% url 'sign_up' %}">Inscrivez-vous maintenant !</a></p>
-<p><a href="{% url 'home' %}">Home</a></p>
+<div id="login" class="div_form">
+
+    <form method="post" novalidate>
+        {{ form.as_p }}
+        {% csrf_token %}
+        <div class="login_c01">
+            <button type="submit" class="lien_1">Se connecter</button>
+        </div>
+    </form>
+    <p >Pas encore membre ?</p>
+    <a href="{% url 'sign_up' %}" class="login_c02">Inscrivez-vous maintenant !</a>
+
+</div>
 {% endblock content %}

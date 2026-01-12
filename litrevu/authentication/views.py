@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 from . import forms
 from authentication.forms import UserFollowerToAddForm, UserFollowersForm
-from authentication.models import User
+from authentication.models import User, UserFollows
 
 class SignUp(View):
     template_name = 'authentication/signup.html'
@@ -46,7 +46,6 @@ class LoginPage(View):
                 password=form.cleaned_data['password'],
             )
             if user is not None:
-                messages.success(request, "La connexion a réussie")
                 login(request, user)
                 return redirect(settings.LOGIN_REDIRECT_URL)
             else:
@@ -73,22 +72,25 @@ def abonnements(request):
                 abonnement.save()
                 return redirect("abonnements")
         if "delete_follower" in request.POST:
-            UserFollows = User.objects.get(id=request.POST["followed_user"])
-            UserFollows.delete()
+            UserFollow = UserFollows.objects.get(followed_user_id=request.POST["followed_user"])
+            UserFollow.delete()
             return redirect("abonnements")
 
 
-    form = UserFollowerToAddForm(user=request.user)
+    userFollowsAdd_forms = UserFollowerToAddForm(user=request.user)
 
-    userFollows = request.user.following.all()
-    userFollows_forms = []
-    for userFollow in userFollows:
-        formFollow = UserFollowersForm(instance=userFollow)
-        userFollows_forms.append(formFollow)
+    userFollowsByMe = request.user.following.all()
+    userFollowsByMe_forms = []
+    for userFollowByMe in userFollowsByMe:
+        formFollow = UserFollowersForm(instance=userFollowByMe)
+        userFollowsByMe_forms.append(formFollow)
+
+    userFollowsMe = request.user.followed_by.all()
 
     return render(request, "authentication/abonnements.html", context={
-    'form': form,
-    'userFollows_forms': userFollows_forms
+    "userFollowsAdd_forms": userFollowsAdd_forms,
+    "userFollowsByMe_forms": userFollowsByMe_forms,
+    "userFollowsMe": userFollowsMe
     })
 
 

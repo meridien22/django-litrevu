@@ -55,6 +55,8 @@ class UserFollowersForm(forms.ModelForm):
         model = UserFollows
         exclude = ("user",)
         widgets = {
-            # On force l'utilisation du widget simple sans case à cocher
-            "followed_user": forms.HiddenInput()
+            # Le champ sera présent mais ne sera pas affiché
+            # Permet de récupérer 
+            "followed_user": forms.HiddenInput(),
+            "user": forms.HiddenInput()
         }

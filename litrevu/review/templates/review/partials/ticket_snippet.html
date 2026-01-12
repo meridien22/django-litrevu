@@ -1,0 +1,46 @@
+{% load review_extras %}
+
+{% if post.content_type == 'TICKET' %}
+    <div id="ticket" class="ticket_c08">
+{% else%}
+    <div id="ticket" class="ticket_c09">
+{% endif %}
+
+    <div class="ticket_c05">
+        <div class="ticket_c01">
+            {% if ticket.image %}
+                <img src="{{ ticket.image.url }}">
+            {% endif %}
+        </div>
+
+        <div class="ticket_c02">
+            <p class="ticket_c03">{{ ticket.title }}</p>
+
+            <br>
+            <p>{% get_poster_display ticket.user %} demandé une critique</p>
+
+            {% if ticket.content_type == 'TICKET' %}
+                <p class="ticket_c07">{{ ticket.time_created }}</p>
+            {% endif %}
+
+            {% if ticket.content_type == 'TICKET' %}
+                <br>
+                <p class="ticket_c06">{{ ticket.description }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="ticket_c04">
+        {% if ticket.nb_reviews == 0 %}
+            <br>
+            <a href="{% url 'ticket_review' ticket.id %}" class="lien_2">Créer une critique</a>
+        {% endif %}
+
+        {% if ticket.view == 'POSTS' %}
+            <br>
+            <a href="{% url 'ticket_update' ticket.id %}" class="lien_2">Modifier</a>
+            <a href="{% url 'ticket_delete' ticket.id %}" class="lien_2">Supprimer</a>
+        {% endif %}
+    </div>
+
+</div>
