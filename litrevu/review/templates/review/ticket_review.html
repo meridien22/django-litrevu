@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
+    <div class="div_form">
+        <h2>Vous êtes en train de poster en réponse à</h2>
+        {% include 'review/partials/ticket_snippet.html'%}
+        <h3>Critique</h3>
+        <form action="" method="post" novalidate>
+            {% csrf_token %}
 
-    <h3>Vous êtes en train de poster en réponse à</h2>
-    {% include 'review/partials/ticket_snippet.html'%}
-    <h1>Critique</h1>
-    <form action="" method="post" novalidate>
-        {% csrf_token %}
-
-        {{ form.as_p }} 
-        
-        <input type="submit" value="Envoyer">
-        <button><a href="{% url 'flux' %}">Annuler</a></button>
-    </form>
+            {{ form.as_p }} 
+        <div>
+            <input type="submit" value="Envoyer">
+        </div>
+        </form>
+        <a href="{% url 'flux' %}">Annuler</a>
+    </div>
 
 {% endblock content %}

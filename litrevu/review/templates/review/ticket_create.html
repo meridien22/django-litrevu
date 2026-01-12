@@ -6,9 +6,11 @@
         <form action="" method="post" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
             {{ form.as_p }}
-            <input type="submit" value="Envoyer">
+            <div>
+                <input type="submit" value="Envoyer">
+            </div>
         </form>
+        <a href="{% url 'flux' %}">Annuler</a>
     </div>
 
-    <button><a href="{% url 'flux' %}">Annuler</a></button>
 {% endblock content %}

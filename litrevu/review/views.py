@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
 from review.forms import TicketForm, ReviewForm
 from review.models import Ticket, Review
 from itertools import chain
@@ -105,9 +104,10 @@ def ticket_update(request, id):
 @login_required
 def ticket_review(request, id):
    ticket = Ticket.objects.get(id=id)
+   ticket.content_type = 'TICKET'
 
    if request.method == 'POST':
-      form = ReviewForm(request.POST)
+      form = ReviewForm(request.POST, prefix='review')
       if form.is_valid():
          review = form.save(commit=False)
          review.user = request.user
@@ -115,7 +115,7 @@ def ticket_review(request, id):
          review.save()
          return redirect("flux")
    else:
-      form = ReviewForm()
+      form = ReviewForm(prefix='review')
 
    return render(request,
                 "review/ticket_review.html",
@@ -124,6 +124,7 @@ def ticket_review(request, id):
 @login_required
 def ticket_delete(request, id):
    ticket = Ticket.objects.get(id=id)
+   ticket.content_type = 'TICKET'
 
    if request.method == 'POST':
       ticket.delete()
@@ -137,14 +138,15 @@ def ticket_delete(request, id):
 def review_update(request, id):
    review = Review.objects.get(id=id)
    ticket = review.ticket
+   ticket.content_type = 'TICKET'
 
    if request.method == 'POST':
-      form = ReviewForm(request.POST, instance=review)
+      form = ReviewForm(request.POST, instance=review, prefix='review')
       if form.is_valid():
          form.save()
          return redirect("posts") 
    else:
-      form = ReviewForm(instance=review)
+      form = ReviewForm(instance=review, prefix='review')
 
    return render(request,
                  "review/review_update.html",
@@ -185,8 +187,8 @@ def ticket_review_create(request):
       
    else:
 
-      ticket_form = TicketForm()
-      review_form = ReviewForm()
+      ticket_form = TicketForm(prefix='ticket')
+      review_form = ReviewForm(prefix='review')
 
    return render(request, "review/ticket_review_create.html",
                  context={

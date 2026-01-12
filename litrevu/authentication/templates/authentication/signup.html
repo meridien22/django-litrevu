@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div id="signup" class="div_form">
+    <div class="signup div_form">
         <h2>Inscription</h2>
         {% if form.errors %}
             {{ form.errors }}
@@ -9,9 +9,9 @@
             {{ form.as_p }}
             {% csrf_token %}
             <div class="signup_c01">
-                <button type="submit" class="lien_1">S'inscrire</button>
+                <input type="submit" value="S'inscrire">
             </div>
         </form>
-        <p><a href="{% url 'home' %}" class="signup_c02">Home</a></p>
+        <p><a href="{% url 'home' %}">Retour</a></p>
     </div>
 {% endblock content %}

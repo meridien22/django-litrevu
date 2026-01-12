@@ -2,11 +2,11 @@
 {% load review_extras %}
 
 {% block content %}
-<div id="flux">
-    <div class="flux_c01">
-        <a href="{% url 'ticket_create' %}" class="flux_c02" title="Ajouter un ticket">+</a>
+<div class="flux">
+    <div class="flux__div">
+        <a href="{% url 'ticket_create' %}" class="flux__a" title="Ajouter un ticket">+</a>
         <p>Ticket</p>
-        <a href="{% url 'ticket_review_create' %}" class="flux_c03" title="Ajouter une review">+</a>
+        <a href="{% url 'ticket_review_create' %}" class="flux__a" title="Ajouter une review">+</a>
         <p>Review</p>
     </div>
 

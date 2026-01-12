@@ -1,45 +1,47 @@
 {% load review_extras %}
 
-{% if post.content_type == 'TICKET' %}
-    <div id="ticket" class="ticket_c08">
+{% if ticket.content_type == 'TICKET' %}
+    <div class="ticket ticket--border">
 {% else%}
-    <div id="ticket" class="ticket_c09">
+    <div class="ticket ticket--background">
 {% endif %}
 
-    <div class="ticket_c05">
-        <div class="ticket_c01">
+    <div class="ticket_containeur">
+        <div>
             {% if ticket.image %}
                 <img src="{{ ticket.image.url }}">
+            {% else %}
+                <img src="{{ MEDIA_URL }}livre_defaut.jpg">
             {% endif %}
         </div>
 
-        <div class="ticket_c02">
-            <p class="ticket_c03">{{ ticket.title }}</p>
+        <div class="ticket_containeur__detail">
+            <p class="ticket_containeur__div_title">{{ ticket.title }}</p>
 
             <br>
             <p>{% get_poster_display ticket.user %} demandé une critique</p>
 
             {% if ticket.content_type == 'TICKET' %}
-                <p class="ticket_c07">{{ ticket.time_created }}</p>
+                <p class="ticket_containeur__date">{{ ticket.time_created }}</p>
             {% endif %}
 
             {% if ticket.content_type == 'TICKET' %}
                 <br>
-                <p class="ticket_c06">{{ ticket.description }}</p>
+                <p class="ticket_containeur__description">{{ ticket.description }}</p>
             {% endif %}
         </div>
     </div>
 
-    <div class="ticket_c04">
+    <div class="ticket_action">
         {% if ticket.nb_reviews == 0 %}
             <br>
-            <a href="{% url 'ticket_review' ticket.id %}" class="lien_2">Créer une critique</a>
+            <a href="{% url 'ticket_review' ticket.id %}" class="linkbutton linkbutton--medium">Créer une critique</a>
         {% endif %}
 
         {% if ticket.view == 'POSTS' %}
             <br>
-            <a href="{% url 'ticket_update' ticket.id %}" class="lien_2">Modifier</a>
-            <a href="{% url 'ticket_delete' ticket.id %}" class="lien_2">Supprimer</a>
+            <a href="{% url 'ticket_update' ticket.id %}" class="linkbutton linkbutton--medium">Modifier</a>
+            <a href="{% url 'ticket_delete' ticket.id %}" class="linkbutton linkbutton--medium">Supprimer</a>
         {% endif %}
     </div>
 

@@ -2,34 +2,42 @@
 {% load authentication_extras %}
 {% block content %}
 
-    <h1>Suivre d'autres utilisateurs</h1>
-    <form action="" method="post" novalidate>
-        {{ userFollowsAdd_forms.as_p }}
-        {% csrf_token %}
-        <input type="submit" value="Envoyer">
-    </form>
-
-    <h1>Abonnements</h1>
-    {% if userFollowsByMe_forms|length == 0 %}
-        <p>Aucun abonnement</p>
-    {% else %}
-        {% for userFollowsByMe_form in userFollowsByMe_forms %}
-            <form action="" method="post" novalidate>
-                {% csrf_token %}
-                {% get_user_follow_display userFollowsByMe_form.followed_user.value %}
-                {{ userFollowsByMe_form.as_p }}
-            <input type="submit" value="Désabonner">
+    <div class="div_form">
+        <h2>Suivre d'autres utilisateurs</h2>
+        <form action="" method="post" novalidate>
+            {% csrf_token %}
+            {{ userFollowsAdd_forms.as_p }}
+            <div>
+                <input type="submit" value="Envoyer">
+            </div>
         </form>
-        {% endfor %}
-    {% endif %}
 
-    <h1>Abonnés</h1>
-    {% if userFollowsMe|length == 0 %}
-        <p>Aucun abonnés</p>
-    {% else %}
-        {% for userFollowMe in userFollowsMe%}
-            <p>{{ userFollowMe.user }}</p>
-        {% endfor %}
-    {% endif %}
+        <h2>Abonnements</h2>
+        {% if userFollowsByMe_forms|length == 0 %}
+            <p>Aucun abonnement</p>
+        {% else %}
+            {% for userFollowsByMe_form in userFollowsByMe_forms %}
+                <form action="" method="post" novalidate class="subscription__form-no_margin">
+                    {% csrf_token %}
+                    <div class="subscription">
+                        <p>
+                            {% get_user_follow_display userFollowsByMe_form.followed_user.value %}
+                        </p>
+                        {{ userFollowsByMe_form.as_p }}
+                        <input type="submit" value="Désabonner">
+                    </div>
+            </form>
+            {% endfor %}
+        {% endif %}
+
+        <h2>Abonnés</h2>
+        {% if userFollowsMe|length == 0 %}
+            <p>Aucun abonnés</p>
+        {% else %}
+            {% for userFollowMe in userFollowsMe%}
+                <p>{{ userFollowMe.user }}</p>
+            {% endfor %}
+        {% endif %}
+    </div>
 
 {% endblock content %}

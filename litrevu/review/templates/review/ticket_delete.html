@@ -1,11 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Etes-vous sûr de vouloir supprimer le ticket : </h1>
-    {% include 'review/partials/ticket_snippet.html' %}
 
-    <form action="" method="post">
-        {% csrf_token %}
-        <input type="submit" value="Confirmer">
-    </form>
-    <button><a href="{% url 'posts' %}">Annuler</a></button>
+    <div class="div_form">
+        <h2>Etes-vous sûr de vouloir supprimer le ticket : </h2>
+        
+        {% include 'review/partials/ticket_snippet.html' %}
+
+        <form action="" method="post">
+            {% csrf_token %}
+            <div>
+                <input type="submit" value="Confirmer">
+            </div>
+        </form>
+        <a href="{% url 'posts' %}">Annuler</a>
+    </div>
+
 {% endblock content %}

@@ -5,6 +5,8 @@
   --green_ligth: #C9F0DD;
   --gray_light: #f8f8f8;
   --pink: #6a0e0e;
+  --light: #fafafa;
+  --dark: #000000;
 }
 
 * {
@@ -13,10 +15,7 @@
   padding: 0;
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
-}
+/* body */
 
 body {
     display: flex;
@@ -26,7 +25,9 @@ body {
     min-height: 100dvh;
 }
 
-header{
+/* header */
+
+.header{
   position: sticky;
   top: 0;
   background-color: var(--green_dark);
@@ -39,11 +40,39 @@ header{
   z-index: 1000;
 }
 
+.header__p {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.header__p--medium {
+  color: var(--light);
+  font-size: 2rem;
+  
+}
+
+.header__p--small {
+  color: var(--green_medium);
+  font-size: 1rem;
+  width: 180px;
+}
+
+
+.header__a {
+  color: var(--light);
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+/* main */
+
 main {
   flex: 1; /* Force cette section à prendre tout l'espace disponible */
   padding: 0.5rem;
   background-color: var(--gray_light);
 }
+
+/* footer */
 
 footer {
   background-color: var(--green_medium);
@@ -54,55 +83,39 @@ footer {
   height: 20px;
 }
 
-.lien_1{
+/* linkbutton */
+
+.linkbutton {
   padding: 5px;
-  border-style: solid;
+  border: 1px solid black;
   border-radius: 8px;
-  border-width: 0px;
+  text-decoration: none;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.linkbutton--medium {
   border-color: var(--green_medium);
   background-color: var(--green_medium);
   color: white;
-  cursor: pointer;
 }
 
-.lien_2{
-  padding: 5px;
-  border-style: solid;
-  border-radius: 8px;
-  border-width: 0px;
+.linkbutton--light {
   border-color: var(--green_medium);
   background-color: var(--green_ligth);
   color: black;
-  cursor: pointer;
 }
 
-header .c01{
-  color: white;
-  font-size: 2rem;
-  display: inline-block;
-  margin-right: 10px;
-}
+/* user_messages */
 
-header .c02{
-  color: var(--green_medium);
-  font-size: 1rem;
-  width: 180px;
-  display: inline-block;
-}
-
-header a{
-  color: white;
-  font-size: 1.2rem;
-}
-
-#user_messages{
+#user_messages {
     width: 100vw;
     height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: var(--pink);
-    color: rgb(255,255,255);
+    color: var(--light);
     position: fixed;
     bottom: 20px;
 }
@@ -112,7 +125,7 @@ header a{
 .div_form {
   margin-top: 60px;
   width: fit-content;
-  padding: 30px;
+  padding: 20px;
   border: 1px solid var(--green_dark);
   border-radius: 5px;
   margin-left: auto;
@@ -120,37 +133,84 @@ header a{
   background-color: var(--green_ligth);
 }
 
-.div_form label{
+.div_form form{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+/* limite du BEM avec Django et les ModelsForm, par défaut on ne contrôle pas la classe
+des éléments du formulaire */
+.div_form label {
   display: block;
   width: fit-content;
 }
 
-.div_form input{
-  font-size: 1.5rem;
+.div_form input {
+  font-size: 1rem;
   padding: 5px;
-  margin-bottom: 10px;
+  margin: 2.5px;
   font-family: inherit;
+  width: 100%;
 }
 
-.div_form h2{
+.div_form textarea {
+  width: 100%;
+  margin: 2.5px;
+  font-size: 1rem;
+  font-family: inherit;
+  padding: 3px;
+}
+
+.div_form select{
+  width: 100%;
+  padding: 5px;
+  margin: 2.5px;
+}
+
+.div_form input[type="file"] {
+  margin: 2.5px;
+  width: 100%;
+  padding: 0px;
+}
+
+.div_form input[type="submit"] {
+  border: 1px solid var(--green_dark);
+  border-radius: 5px;
+  background-color: var(--green_medium);
+  cursor: pointer;
+  color: var(--gray_light);
+  width: fit-content;
+}
+
+.div_form h2 {
   color:var(--green_dark);
-  margin-bottom: 10px;
+  text-align: center;
+  font-size: 1rem;
+  width:350px;
 }
 
-.div_form div:has(input[type="submit"]){
+.div_form h3 {
+  color:var(--green_dark);
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.div_form hr {
+  margin: 2.5px;
+}
+
+.div_form div:has(input[type="submit"]) {
   display: flex;
   justify-content: right;
   width: 100%;
   margin-bottom: 20px;
+  align-items: center;
+  margin: 2.5px;
+  padding: 5px;
 }
 
-/* FLUX */
+/* flux */
 
-#flux{
-  position: relative;
-}
-
-#flux .flux_c01{
+.flux__div {
   display: flex;
   flex-direction: column;        
   justify-content: space-between;
@@ -163,7 +223,7 @@ header a{
   padding: 10px;
 }
 
-#flux .flux_c01 a{
+.flux__a {
   padding-top: 5px;
   padding-bottom: 5px;
   padding-left: 15px;
@@ -174,16 +234,17 @@ header a{
   font-size: 2rem;
   font-weight: 600;
   background-color: var(--green_medium);
-  color: white;
+  color: var(--light);
+  text-decoration: none;
 }
 
-#flux .flux_c01 a:hover{
+.flux__a:hover {
   background-color: var(--green_dark);
 }
 
-/* TICKET */
+/* ticket */
 
-#ticket{
+.ticket {
   padding: 5px;
   width: fit-content;
   height: 260px;
@@ -193,66 +254,62 @@ header a{
 }
 
 
-#ticket.ticket_c08{
+.ticket--border {
   border: 1px solid black;
   border-radius: 8px;
   width: 600px;
-  
+  background-color: var(--green_ligth);
 }
 
-#ticket.ticket_c09{
+.ticket--background {
   background-color: var(--green_ligth);
   border-radius: 8px;
   width: 580px;
 }
 
-#ticket .ticket_c05{
+.ticket_containeur {
   display: flex;
   flex-direction: row;
 }
 
-#ticket img{
+.ticket_containeur img {
   width: 150px;
   height: 244px;
   object-fit: cover;
 }
 
-#ticket .ticket_c02{
+.ticket_containeur__detail {
   padding-left: 10px;
   padding-right: 10px;
 }
 
-#ticket .ticket_c03{
+.ticket_containeur__div_title {
   font-size: 1.5rem;
 }
 
-#ticket .ticket_c04{
+.ticket_action{
   font-size: 1rem;
   position: absolute;
   bottom: 0;
   right: 0;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
+  margin-right: 15px;
 }
 
-#ticket .ticket_c04 a{
-  margin-right: 10px;
-  margin-left: 5px;
-}
-
-#ticket .ticket_c06{
+.ticket_containeur__description  {
   font-size: 1rem;
   font-style: italic;
   color: var(--green_dark);
   font-weight: 500;
 }
 
-#ticket .ticket_c07{
+.ticket_containeur__date  {
   font-size: 0.8rem;
 }
 
-/* REVIEW */
+/* review */
 
-#review{
+.review {
   padding: 5px;
   width: fit-content;
   width: 600px;
@@ -265,30 +322,30 @@ header a{
   height: fit-content;
 }
 
-#review .review_c02{
+.review__container {
   display: flex;            
   justify-content: space-between;
   align-items: center;
 }
 
-#review .review_c01{
+.review__star_container {
   display: inline-block;
 }
 
-#review .review_c01 span{
+.review__star_container span {
    color: #ccc; font-size: 25px;
 }
 
-#review .review_c01 span.filled { 
+.review__star_container .filled { 
   color: orange;
 }
 
-#review .review_c03{
+.review__star_container_headline {
   font-size: 1.5rem;
   margin-bottom: 10px;
 }
 
-#review .review_c04{
+.review__star_container_body {
   font-size: 1rem;
   font-style: italic;
   color: var(--green_dark);
@@ -296,29 +353,70 @@ header a{
   margin-bottom: 10px;
 }
 
-/* LOGIN */
+/* signup */
 
-#login .login_c02{
-  text-decoration: underline;
-}
-
-/* SIGNUP */
-
-#signup span{
+.signup span {
   display: block;
   width: fit-content;
 }
 
-#signup button{
+.signup button {
   font-size: 1.2rem;
 }
 
-#signup .signup_c02{
-  text-decoration: underline;
+/* id_rating */
+
+#id_review-rating {
+    display: flex;
+    gap: 15px;
+    margin: 2.5px;
+}
+#id_review-rating > div {
+    display: inline-block;
 }
 
-/* TICKET_CREATE */
+#id_review-rating > div:first-child {
+    display: none;
+}
 
-#ticket_create{
+#id_review-rating input[type="radio"] {
+    display: none;
+}
 
+#id_review-rating label {
+    display: inline-block;
+    padding: 8px 15px;
+    border: 1px solid var(--green_dark);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#id_review-rating label:hover {
+    background-color: #f0f0f0;
+}
+
+/* style du label que le contrôle radio est coché */
+#id_review-rating label:has(input[type="radio"]:checked) {
+    background-color: var(--green_medium);
+    color: white;
+}
+
+/* subscription */
+.subscription{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.subscription p{
+  display: block;
+  width: 100%;
+  padding: 3px;
+  border: 1px solid var(--dark);
+}
+
+.subscription__form-no_margin{
+  margin: -10px !important;
 }
