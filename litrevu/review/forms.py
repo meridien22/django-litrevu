@@ -2,7 +2,13 @@ from django import forms
 
 from review.models import Ticket, Review
 
+
 class TicketForm(forms.ModelForm):
+    """Form for submitting an existing ticket or creating a new ticket.
+
+    Args:
+        forms : Base class for creating forms.
+    """
     class Meta:
         model = Ticket
         # fields = '__all__'
@@ -18,6 +24,11 @@ class TicketForm(forms.ModelForm):
 
 
 class ReviewForm(forms.ModelForm):
+    """Form allowing you to submit an existing review or create a new review.
+
+    Args:
+        forms : Base class for creating forms.
+    """
     # Normalement devrait supprimer les : des noms de champs mais cela ce fonctionne pas
     label_suffix = ""
 

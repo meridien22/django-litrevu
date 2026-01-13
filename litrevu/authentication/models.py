@@ -2,8 +2,10 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.conf import settings
 
+
 class User(AbstractUser):
-    
+    """Custom user template."""
+
     CREATOR = 'CREATOR'
     SUBSCRIBER = 'SUBSCRIBER'
 
@@ -11,7 +13,7 @@ class User(AbstractUser):
         (CREATOR, 'Créateur'),
         (SUBSCRIBER, 'Abonné'),
     )
-    
+
     profile_photo = models.ImageField(verbose_name='Photo de profil')
     role = models.CharField(max_length=30, choices=ROLE_CHOICES, verbose_name='Rôle')
     follows = models.ManyToManyField(
@@ -25,7 +27,13 @@ class User(AbstractUser):
 # user.followers.all() renvoie ceux qui me suivent
 # user.following.all() (renvoi des objets UserFollows)
 
+
 class UserFollows(models.Model):
+    """Template for managing user tracking.
+
+    Args:
+        models : Base class for creating models.
+    """
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,

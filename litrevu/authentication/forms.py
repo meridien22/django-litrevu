@@ -2,24 +2,41 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from authentication.models import UserFollows
-from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 class SignupForm(UserCreationForm):
+    """Form for creating a user.
+
+    Args:
+        UserCreationForm : Original form used for inheritance.
+        Required when a custom user template has been implemented.
+    """
     class Meta(UserCreationForm.Meta):
         model = get_user_model()
         fields = ('username',)
 
 
 class LoginForm(forms.Form):
+    """User login form.
+
+    Args:
+        forms : Base class for creating forms.
+    """
     username = forms.CharField(max_length=63, label='Nom d’utilisateur')
     password = forms.CharField(max_length=63, widget=forms.PasswordInput, label='Mot de passe')
 
 
 class UserFollowerToAddForm(forms.ModelForm):
+    """A form allowing a user to select another user to follow.
+    Users who are already being followed are not taken into account.
+
+    Args:
+        forms : Base class for creating forms.
+    """
     add_follower = forms.BooleanField(widget=forms.HiddenInput, initial=True)
-   
+
     class Meta:
         model = UserFollows
         exclude = ("user",)
@@ -29,7 +46,7 @@ class UserFollowerToAddForm(forms.ModelForm):
         # "None" est la valeur par défaut si la clé "user" n'existe pas
         user = kwargs.pop('user', None)
         super(UserFollowerToAddForm, self).__init__(*args, **kwargs)
-        
+
         if user:
             # On filtre pour exclure l'utilisateur actuellement connecté
             # On filtre aussi pour exlure les utilisateurs déjà suivis
@@ -48,7 +65,13 @@ class UserFollowerToAddForm(forms.ModelForm):
                 id__in=[user.id] + list(already_following)
             )
 
+
 class UserFollowersForm(forms.ModelForm):
+    """Form allowing the removal of a user's subscription to another user.
+
+    Args:
+        forms : Base class for creating forms.
+    """
     delete_follower = forms.BooleanField(widget=forms.HiddenInput, initial=True)
 
     class Meta:
@@ -56,7 +79,7 @@ class UserFollowersForm(forms.ModelForm):
         exclude = ("user",)
         widgets = {
             # Le champ sera présent mais ne sera pas affiché
-            # Permet de récupérer 
+            # Permet de savoir quel UserFollow supprimer.
             "followed_user": forms.HiddenInput(),
             "user": forms.HiddenInput()
         }

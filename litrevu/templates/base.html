@@ -1,9 +1,9 @@
 {% load static %}
-<html>
+<html data-theme="light">
     <head>
         <title>LITRevu</title>
         <link rel="icon" type="image/x-icon" href="{% static 'favicon.png' %}">
-        <link rel="stylesheet" href="{% static 'app.css' %}">
+        <link rel="stylesheet" href="{% static 'css/app.css' %}">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,9 +11,13 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+        <script type="module" src="{% static 'js/script.js' %}"></script>
+
+        {% block extra_js %}{% endblock extra_js %}
+
     </head>
     <body>
-        <header class="header">
+        <header class="header" id="menu">
             <div>
                 <p class="header__p header__p--medium">LITRevu</p>
                 <p class="header__p header__p--small">Le site des passionnées de littérature</p>
@@ -24,6 +28,10 @@
                 <a href="{% url 'abonnements' %}" class="header__a">Abonnements</a>
                 <a href="{% url 'logout' %}" class="header__a">Se déconnecter</a>
             {% endif %}
+            <button id="theme_toggle">
+                <span class="icon_sun">☀️</span>
+                <span class="icon_moon">🌙</span>
+            </button>
         </header>
 
         <main>

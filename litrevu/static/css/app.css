@@ -9,6 +9,42 @@
   --dark: #000000;
 }
 
+[data-theme="dark"] {
+  --green_dark: #000000;
+  --green_medium: #fafafa;
+  --green_ligth: #fafafa;
+  --gray_light: #fafafa;
+  --pink: #000000;
+  --light: #fafafa;
+  --dark: #000000;
+}
+
+#theme_toggle {
+  background-color: var(--green_dark);
+  padding-left: 4px;
+  padding-right: 3px;
+  padding-top: 3px;
+  padding-bottom: 4px;
+}
+
+.icon_sun {
+  font-size: 1.5rem;
+  background-color: var(--green_dark);
+}
+
+.icon_moon {
+  font-size: 1.5rem;
+  background-color: var(--green_dark);
+}
+
+[data-theme="light"] .icon_moon {
+  display: none;
+}
+
+[data-theme="dark"] .icon_sun {
+  display: none;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -58,10 +94,22 @@ body {
 }
 
 
-.header__a {
+.header__a--no_activate {
+  color: var(--green_medium);
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+.header__a--no_activate:hover {
+  color: var(--green_ligth);
+  font-weight: 700;
+}
+
+.header__a--activate {
   color: var(--light);
   font-size: 1.2rem;
   text-decoration: none;
+  font-weight: 700;
 }
 
 /* main */
@@ -185,7 +233,7 @@ des éléments du formulaire */
   color:var(--green_dark);
   text-align: center;
   font-size: 1rem;
-  width:350px;
+  width:355px;
 }
 
 .div_form h3 {
@@ -368,9 +416,12 @@ des éléments du formulaire */
 
 #id_review-rating {
     display: flex;
-    gap: 15px;
+    flex-direction: row;
+    gap: 5px;
     margin: 2.5px;
+    justify-content: left;
 }
+
 #id_review-rating > div {
     display: inline-block;
 }
@@ -385,19 +436,24 @@ des éléments du formulaire */
 
 #id_review-rating label {
     display: inline-block;
-    padding: 8px 15px;
+    padding-top: 2px;
+    padding-bottom: 5px;
+    padding-left: 8px;
+    padding-right: 6px;
     border: 1px solid var(--green_dark);
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.2s;
+    font-size: 1.5rem;
+    font-weight: 700;
 }
 
 #id_review-rating label:hover {
-    background-color: #f0f0f0;
+    background-color: var(--green_medium);
+    color: white;
 }
 
-/* style du label que le contrôle radio est coché */
-#id_review-rating label:has(input[type="radio"]:checked) {
+.rating_active{
     background-color: var(--green_medium);
     color: white;
 }

@@ -2,6 +2,7 @@ from django.contrib import admin
 from review.models import Ticket
 from review.models import Review
 
+
 class TicketAdmin(admin.ModelAdmin):
     list_display = ("id",
                     "title",
@@ -9,7 +10,8 @@ class TicketAdmin(admin.ModelAdmin):
                     "user",
                     "image",
                     "time_created")
-    
+
+
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ("id",
                     "rating",
@@ -17,6 +19,7 @@ class ReviewAdmin(admin.ModelAdmin):
                     "headline",
                     "body",
                     "time_created")
+
 
 admin.site.register(Ticket, TicketAdmin)
 
