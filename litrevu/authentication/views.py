@@ -89,7 +89,9 @@ def abonnements(request):
                 abonnement.save()
                 return redirect("abonnements")
         if "delete_follower" in request.POST:
-            UserFollow = UserFollows.objects.get(followed_user_id=request.POST["followed_user"])
+            print(request.POST["followed_user"])
+            UserFollow = UserFollows.objects.get(followed_user_id=request.POST["followed_user"],
+                                                 user_id=request.user)
             UserFollow.delete()
             return redirect("abonnements")
 
