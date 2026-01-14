@@ -451,11 +451,11 @@ des éléments du formulaire */
 
 #id_review-rating label:hover {
     background-color: var(--green_medium);
-    color: white;
+    color: var(--light);
 }
 
 .rating_active{
-    background-color: var(--green_medium);
+    background-color: var(--green_dark);
     color: white;
 }
 
