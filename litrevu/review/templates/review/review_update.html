@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block extra_js %}
+    <script type="module" src="{% static 'js/review.js' %}"></script>
+{% endblock extra_js %}
+
 {% block content %}
 
 <div class="div_form">

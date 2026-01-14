@@ -1,4 +1,4 @@
-// gestion de la notation avec des étoiles
+// gestion de la notation avec les étoiles
 
 const container_label = document.getElementById('id_review-rating');
 
@@ -20,5 +20,16 @@ function updateRating() {
 }
 
 if (container_label) {
+    updateRating();
     container_label.addEventListener('change', updateRating);
+}
+
+
+// gestion du focus
+
+const focusElement1 = document.getElementById('id_review-headline');
+const focusElement2 = document.getElementById('id_ticket-title');
+focusElement1.focus();
+if (focusElement2) {
+    focusElement2.focus();
 }

@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block extra_js %}
+    <script type="module" src="{% static 'js/ticket.js' %}"></script>
+{% endblock extra_js %}
+
 {% block content %}
 
 <div class="div_form">
@@ -6,21 +11,25 @@
 
     <form action="" method="post" enctype="multipart/form-data" novalidate>
         {% csrf_token %}
+        
         {% for field in form %}
 
             {% if field.name == 'image' and field.value %}
-                {{ field.label_tag }}<br>
-                <img src="{{ field.value.url }}"><br>
+                {{ field.label_tag }}
+                <img src="{{ field.value.url }}"" alt="image de la couverture du livre">
                 {{ field }}
             {% else %}
-                {{ field.label_tag }}<br>
-                {{ field }}<br>
+                {{ field.label_tag }}
+                {{ field }}
             {% endif %}
             {{ field.errors }}
+
         {% endfor %}
+
         <div>
             <input type="submit" value="Enregistrer">
         </div>
+
     </form>
     <a href="{% url 'posts' %}">Annuler</a>
 </div>

@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 {% load authentication_extras %}
+{% load static %}
+{% block extra_js %}
+    <script type="module" src="{% static 'js/subscription.js' %}"></script>
+{% endblock extra_js %}
+
 {% block content %}
 
     <div class="div_form">

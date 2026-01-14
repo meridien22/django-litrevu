@@ -9,9 +9,9 @@
     <div class="ticket_containeur">
         <div>
             {% if ticket.image %}
-                <img src="{{ ticket.image.url }}">
+                <img src="{{ ticket.image.url }}" alt='image de la couverture du livre "{{ ticket.title }}"'>
             {% else %}
-                <img src="{{ MEDIA_URL }}livre_defaut.jpg">
+                <img src="{{ MEDIA_URL }}livre_defaut.jpg"  alt="image générique d'un livre">
             {% endif %}
         </div>
 

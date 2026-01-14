@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block extra_js %}
+    <script type="module" src="{% static 'js/ticket.js' %}"></script>
+{% endblock extra_js %}
+
 {% block content %}
 
     <div id="ticket_create" class="div_form">
