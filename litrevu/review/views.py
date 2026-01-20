@@ -74,7 +74,9 @@ def flux(request):
 
     reviews = (
         Review.objects.select_related("ticket")
-        .filter(Q(user__followed_by__user=request.user) | Q(user=request.user))
+        .filter(Q(user__followed_by__user=request.user) | # les users que je suis
+                Q(user=request.user) | # les reviews du user
+                Q(ticket__user=request.user)) # les reviews des tickets du user
         .distinct()
     )
 

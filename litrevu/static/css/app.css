@@ -355,6 +355,10 @@ des éléments du formulaire */
   font-size: 0.8rem;
 }
 
+.ticket p{
+  white-space: pre-line;
+}
+
 /* review */
 
 .review {
